@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.9.34728.123
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ScooterService", "ScooterService\ScooterService.csproj", "{8D230C20-DA86-48F0-9EAD-784001AA0940}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8D230C20-DA86-48F0-9EAD-784001AA0940}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8D230C20-DA86-48F0-9EAD-784001AA0940}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8D230C20-DA86-48F0-9EAD-784001AA0940}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8D230C20-DA86-48F0-9EAD-784001AA0940}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B06EBC5F-4355-4A89-999D-240A6478D463}
+	EndGlobalSection
+EndGlobal
