@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ScooterService.Entities;
+using ScooterService.Enums;
 using System.Reflection;
 
 namespace ScooterService.Data
@@ -16,7 +17,17 @@ namespace ScooterService.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
-           
+            modelBuilder.Entity<User>().HasData(
+                new User()
+                {
+                    Id = 1,
+                    Name = "Allan",
+                    Username = "Allan",
+                    PasswordHash = "ascrvdvs",
+                    Email = "allan.service@gmail.com",
+                    Role = UserRole.Mechanic
+                }
+           );
         }
     }
 }
