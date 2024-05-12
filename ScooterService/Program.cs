@@ -30,6 +30,9 @@ builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IReparationService, ReparationService>();
 builder.Services.AddScoped<IUserService, UserService>();
 
+builder.Services.AddScoped<IScooterRepository, ScooterRepository>();
+builder.Services.AddScoped<IScooterService, ScooterService>();
+
 
 var app = builder.Build();
 
