@@ -24,6 +24,7 @@ namespace ScooterService.Data
                     Name = "Allan",
                     Username = "Allan",
                     PasswordHash = "ascrvdvs",
+                    Token = " hjdgasdjhfs",
                     Email = "allan.service@gmail.com",
                     Role = UserRole.Mechanic
                 }
