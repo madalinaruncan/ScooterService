@@ -2,10 +2,10 @@ using ScooterService.Entities;
 using ScooterService.Repository;
 
 namespace ScooterService.Service {
-    public class ScooterService : IScooterService
+    public class ScooterServiceImpl : IScooterService
     {
         private readonly IScooterRepository _scooterRepository;
-        public ScooterService(IScooterRepository scooterRepository) {
+        public ScooterServiceImpl (IScooterRepository scooterRepository) {
             _scooterRepository = scooterRepository;
         }
         public async Task CreateScooterAsync(Scooter scooter)
