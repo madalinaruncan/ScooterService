@@ -16,7 +16,7 @@ namespace ScooterService.Controllers
             _mapper = mapper;
             _scooterService = scooterService;
         }
-        [HttpGet]
+        [HttpPost]
         public async Task<ActionResult> CreateScooter([FromBody] ScooterAddDto scooter) {
             var scooterToAdd = _mapper.Map<Scooter>(scooter);
             await _scooterService.CreateScooterAsync(scooterToAdd);
