@@ -21,7 +21,7 @@ builder.Services.AddScoped<IReparationRepository, ReparationRepository>();
 builder.Services.AddScoped<IReparationService, ReparationService>();
 
 builder.Services.AddScoped<IScooterRepository, ScooterRepository>();
-builder.Services.AddScoped<IScooterService, ScooterService>();
+builder.Services.AddScoped<IScooterService, ScooterServiceImpl>();
 
 
 var app = builder.Build();
