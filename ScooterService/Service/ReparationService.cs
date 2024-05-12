@@ -20,6 +20,11 @@ namespace ScooterService.Service
             await _reparationRepository.CreateReparationAsync(reparation);
         }
 
+        public async Task<Reparation> GetReparationAsync(long id)
+        {
+            return await _reparationRepository.GetReparationAsync(id);
+        }
+
         public async Task<IEnumerable<Reparation>> GetReparationsAsync()
         {
             return await _reparationRepository.GetReparationsAsync();

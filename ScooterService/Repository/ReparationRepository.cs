@@ -19,6 +19,16 @@ namespace ScooterService.Repository
             await _context.SaveChangesAsync();
         }
 
+        public async Task<Reparation> GetReparationAsync(long id)
+        {
+            return await _context.Reparations
+                .Where(r => r.Id == id)
+                .Include(r => r.Scooter)
+                //.Include(r => r.User)
+                .Include(r => r.Issues)
+                .FirstOrDefaultAsync();
+        }
+
         public async Task<IEnumerable<Reparation>> GetReparationsAsync()
         {
             return await _context.Reparations
@@ -27,5 +37,6 @@ namespace ScooterService.Repository
                 .Include(r => r.Issues)
                 .ToListAsync();
         }
+
     }
 }

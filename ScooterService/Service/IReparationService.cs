@@ -6,6 +6,7 @@ namespace ScooterService.Service
     {
         Task CreateReparationAsync(Reparation reparation);
         Task<IEnumerable<Reparation>> GetReparationsAsync();
-
+        Task<Reparation> GetReparationAsync(long id);
+        
     }
 }

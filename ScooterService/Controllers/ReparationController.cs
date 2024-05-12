@@ -27,6 +27,14 @@ namespace ScooterService.Controllers
             return Ok(reparations);
         }
 
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Reparation>> GetOne(long id)
+        {
+            var reparation = await _reparationService.GetReparationAsync(id);
+
+            return Ok(reparation);
+        }
+
         [HttpPost]
         public async Task<ActionResult> CreateReparation([FromBody] ReparationAddDto reparation)
         {
@@ -35,7 +43,5 @@ namespace ScooterService.Controllers
 
             return NoContent();
         }
-
-
     }
 }
