@@ -23,5 +23,13 @@ namespace ScooterService.Controllers
 
             return NoContent();
         }
+        
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<Scooter>>> GetAll()
+        {
+            var scooters = await _scooterService.GetScootersAsync();
+
+            return Ok(scooters);
+        }
     }
 }
