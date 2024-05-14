@@ -15,9 +15,9 @@ namespace ScooterService.Repository {
             await _context.SaveChangesAsync();
         }
 
-        public Task<IEnumerable<Scooter>> GetScootersAsync()
+        public async Task<IEnumerable<Scooter>> GetScootersAsync()
         {
-            throw new NotImplementedException();
+            return await _context.Scooters.ToListAsync();
         }
     }
 }
