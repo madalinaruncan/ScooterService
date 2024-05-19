@@ -12,6 +12,7 @@ namespace ScooterService.AutoMapper_Profiles
             CreateMap<IssueAddDto, Issue>();
             CreateMap<ReparationAddDto, Reparation>();
             CreateMap<ReparationUpdateDto, Reparation>();
+            CreateMap<ScooterUpdateDto, Scooter>();
         }
     }
 }
