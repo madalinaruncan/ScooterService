@@ -43,5 +43,31 @@ namespace ScooterService.Controllers
 
             return NoContent();
         }
+
+        [HttpPut]
+        public async Task<ActionResult<Reparation>> UpdateReparation(ReparationUpdateDto reparation)
+        {
+            var reparationToUpdate = _mapper.Map<Reparation>(reparation);
+            await _reparationService.UpdateReparationAsync(reparationToUpdate);
+
+            return NoContent();
+        }
+
+
+
+        [HttpDelete("{id}")]
+        public async Task<ActionResult<Reparation>> DeleteReparation(long id)
+        {
+            try
+            {
+                await _reparationService.DeleteReparationAsync(id);
+            }
+            catch (KeyNotFoundException)
+            {
+                return NotFound();
+            }
+
+            return NoContent();
+        }
     }
 }
