@@ -38,5 +38,32 @@ namespace ScooterService.Repository
                 .ToListAsync();
         }
 
+        public async Task<bool> ReparationExistsAsync(long id)
+        {
+            return await _context.Reparations.AnyAsync(r => r.Id == id);
+        }
+
+        public async Task UpdateReparationAsync(Reparation reparation)
+        {
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task DeleteReparationAsync(long id)
+        {
+            var reparation = await _context.Reparations
+                .Where(r => r.Id == id)
+                .Include(r => r.Scooter)
+                .Include(r => r.User)
+                .Include(r => r.Issues)
+                .FirstOrDefaultAsync(r => r.Id == id);
+             
+            if (reparation == null)
+            {
+                throw new KeyNotFoundException("Reparation not found");
+            }
+
+            _context.Reparations.Remove(reparation);
+            await _context.SaveChangesAsync();
+        }
     }
 }
