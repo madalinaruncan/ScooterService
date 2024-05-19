@@ -9,8 +9,8 @@ namespace ScooterService.Service
         Task CreateIssueAsync(Issue issue);
         Task<IEnumerable<Issue>> GetIssuesAsync();
         Task<Issue> GetIssueAsync(long id);
-        Task UpdateReparationAsync(Reparation reparation);
-        Task DeleteReparationAsync(long id);
+        Task UpdateIssueAsync(Issue issue);
+        Task DeleteIssueAsync(long id);
 
     }
 }

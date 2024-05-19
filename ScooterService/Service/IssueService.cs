@@ -46,7 +46,7 @@ namespace ScooterService.Service
             await _issueRepository.UpdateIssueAsync(issue);
         }
 
-        public async Task DeleteIssuesAsync(long id)
+        public async Task DeleteIssueAsync(long id)
         {
             await _issueRepository.DeleteIssueAsync(id);
         }
