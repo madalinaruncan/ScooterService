@@ -36,7 +36,7 @@ namespace ScooterService.Controllers
         [HttpGet("refresh-user-token")]
         public async Task<ActionResult<UserDto>> RefreshUserToken()
         {
-            var user = await _userManager.FindByNameAsync(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
+            var user = await _userManager.FindByNameAsync(User.FindFirst(ClaimTypes.Name)?.Value);
             return CreateApplicationUserDto(user);
         }
 
@@ -46,7 +46,7 @@ namespace ScooterService.Controllers
             var user = await _userManager.FindByNameAsync(model.Username);
             if (user == null) return Unauthorized("Invalid username or password");
 
-            if (user.EmailConfirmed == false) return Unauthorized("Please confirm your email");
+            //if (user.EmailConfirmed == false) return Unauthorized("Please confirm your email");
             var result = await _signInManager.CheckPasswordSignInAsync(user, model.PasswordHash, false);
             if (!result.Succeeded) return Unauthorized("Invalid username or password");
 
@@ -64,28 +64,16 @@ namespace ScooterService.Controllers
             var userToAdd = new User
             {
                 Name = model.Name.ToLower(),
-                UserName = model.Email.ToLower(),
+                UserName = model.Username.ToLower(),
                 Email = model.Email.ToLower(),
+                EmailConfirmed = true
             };
 
             // creates a user inside our AspNetUsers table inside our database
             var result = await _userManager.CreateAsync(userToAdd, model.PasswordHash);
             if (!result.Succeeded) return BadRequest(result.Errors);
-            
 
-            try
-            {
-                if (await SendConfirmEMailAsync(userToAdd))
-                {
-                    return Ok(new JsonResult(new { title = "Account Created", message = "Your account has been created, please confrim your email address" }));
-                }
-
-                return BadRequest("Failed to send email. Please contact admin");
-            }
-            catch (Exception)
-            {
-                return BadRequest("Failed to send email. Please contact admin");
-            }
+            return Ok("Your account has been created, you can login");
 
         }
 
@@ -122,7 +110,7 @@ namespace ScooterService.Controllers
         {
             return new UserDto
             {
-                Name = user.Name,
+                UserName = user.UserName,
                 JWT = _jWTService.creatJWT(user)
             };
         }

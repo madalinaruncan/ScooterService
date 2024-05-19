@@ -26,8 +26,8 @@ namespace ScooterService.Service
             {
                 new Claim(ClaimTypes.NameIdentifier, user.Id),
                 new Claim(ClaimTypes.Email, user.Email),
-                new Claim(ClaimTypes.Name, user.Name),
-                new Claim(ClaimTypes.NameIdentifier, user.UserName)
+                //new Claim(ClaimTypes.Name, user.Name),
+                new Claim(ClaimTypes.Name, user.UserName)
             };
 
             var creadentials = new SigningCredentials(_jwtKey, SecurityAlgorithms.HmacSha512Signature);
