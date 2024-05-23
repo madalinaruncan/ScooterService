@@ -16,6 +16,7 @@ builder.Services.AddDbContext<AppDbContext>(options => options.UseMySql(connecti
 //to be able to inject JWTService in Controllers
 builder.Services.AddScoped<JWTService>();
 builder.Services.AddScoped<EmailService>();
+builder.Services.AddScoped<ContextSeedService>();
 
 //Add IdentityCore service
 builder.Services.AddIdentityCore<User>(options =>
@@ -88,5 +89,19 @@ app.UseAuthorization();
 app.MapControllers();
 
 DbInitiallizer.InitializeDatabase(app);
+
+#region ContextSeed
+using var scope = app.Services.CreateScope();
+try
+{
+    var contextSeedService = scope.ServiceProvider.GetService<ContextSeedService>();
+    await contextSeedService.InitializeContextAsync();
+}
+catch (Exception ex)
+{
+    var logger = scope.ServiceProvider.GetService<ILogger<Program>>();
+    logger.LogError(ex.Message, "Failed to initialize and seed the database");
+}
+#endregion
 
 app.Run();

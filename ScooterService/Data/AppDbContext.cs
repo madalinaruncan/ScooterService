@@ -19,21 +19,23 @@ namespace ScooterService.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<IdentityUserLogin<string>>().HasNoKey();
-            modelBuilder.Entity<IdentityUserRole<string>>().HasNoKey();
+            //modelBuilder.Entity<IdentityUserRole<string>>().HasNoKey();
+            modelBuilder.Entity<IdentityUserRole<string>>().HasKey(ur => new { ur.UserId, ur.RoleId });
             modelBuilder.Entity<IdentityUserToken<string>>().HasNoKey();
 
+
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
-            modelBuilder.Entity<User>().HasData(
-                new User()
-                {
-                    Id = "1",
-                    Name = "Allan",
-                    UserName = "Allan",
-                    PasswordHash = "ascrvdvs",
-                    Email = "allan.service@gmail.com",
-                    //Role = UserRole.Mechanic
-                }
-           );
+           // modelBuilder.Entity<User>().HasData(
+           //     new User()
+           //     {
+           //         Id = "1",
+           //         Name = "Allan",
+           //         UserName = "Allan",
+           //         PasswordHash = "ascrvdvs",
+           //         Email = "allan.service@gmail.com",
+           //         //Role = UserRole.Mechanic
+           //     }
+           //);
         }
     }
 }

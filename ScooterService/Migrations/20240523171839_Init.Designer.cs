@@ -12,8 +12,8 @@ using ScooterService.Data;
 namespace ScooterService.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240515201442_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20240523171839_Init")]
+    partial class Init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -109,11 +109,13 @@ namespace ScooterService.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
                 {
-                    b.Property<string>("RoleId")
-                        .HasColumnType("longtext");
-
                     b.Property<string>("UserId")
-                        .HasColumnType("longtext");
+                        .HasColumnType("varchar(255)");
+
+                    b.Property<string>("RoleId")
+                        .HasColumnType("varchar(255)");
+
+                    b.HasKey("UserId", "RoleId");
 
                     b.ToTable("UserRoles");
                 });
@@ -274,23 +276,6 @@ namespace ScooterService.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Users");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "1",
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "e688be6c-465e-430f-bde6-68995e3fe9d7",
-                            Email = "allan.service@gmail.com",
-                            EmailConfirmed = false,
-                            LockoutEnabled = false,
-                            Name = "Allan",
-                            PasswordHash = "ascrvdvs",
-                            PhoneNumberConfirmed = false,
-                            SecurityStamp = "dcf237d0-90ac-47d8-b666-5c5179d56490",
-                            TwoFactorEnabled = false,
-                            UserName = "Allan"
-                        });
                 });
 
             modelBuilder.Entity("ScooterService.Entities.Issue", b =>
