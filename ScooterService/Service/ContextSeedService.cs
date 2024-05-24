@@ -58,7 +58,8 @@ namespace ScooterService.Service
                     Name = "Admin",
                     UserName = "A100",
                     Email = "admin@es.com",
-                    EmailConfirmed = true
+                    EmailConfirmed = true,
+                    AccountStatus = "Confirmed"
                 };
                 await _userManager.CreateAsync(admin, "123456");
                 await _userManager.AddToRoleAsync(admin, SD.AdminRole);

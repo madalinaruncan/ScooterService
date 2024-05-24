@@ -37,7 +37,7 @@ namespace ScooterService.Controllers
         public async Task<ActionResult<UserDto>> RefreshUserToken()
         {
             var user = await _userManager.FindByNameAsync(User.FindFirst(ClaimTypes.Name)?.Value);
-            return CreateApplicationUserDto(user);
+            return await CreateApplicationUserDto(user);
         }
 
         [HttpPost("login")]
@@ -46,11 +46,12 @@ namespace ScooterService.Controllers
             var user = await _userManager.FindByNameAsync(model.Username);
             if (user == null) return Unauthorized("Invalid username or password");
 
-            //if (user.EmailConfirmed == false) return Unauthorized("Please confirm your email");
+            if (user.AccountStatus == "Pending") return Unauthorized("Your account has not been confirmed yet");
+            if (user.AccountStatus == "Rejected") return Unauthorized("Your account has been rejected");
             var result = await _signInManager.CheckPasswordSignInAsync(user, model.PasswordHash, false);
             if (!result.Succeeded) return Unauthorized("Invalid username or password");
 
-            return CreateApplicationUserDto(user);
+            return await CreateApplicationUserDto(user);
         }
 
         [HttpPost("register")]
@@ -72,8 +73,9 @@ namespace ScooterService.Controllers
             // creates a user inside our AspNetUsers table inside our database
             var result = await _userManager.CreateAsync(userToAdd, model.PasswordHash);
             if (!result.Succeeded) return BadRequest(result.Errors);
+            await _userManager.AddToRoleAsync(userToAdd, SD.MechanicRole);
 
-            return Ok(new JsonResult(new { title = "Account Created", message = "Your account has been created, you can login now" }));
+            return Ok(new JsonResult(new { title = "Account Created", message = "Thank you for registering. Your account is pending confirmation by the admin" }));
 
         }
 
@@ -106,12 +108,12 @@ namespace ScooterService.Controllers
         }
 
         #region Private Helper Method
-        private UserDto CreateApplicationUserDto(User user)
+        private async Task<UserDto> CreateApplicationUserDto(User user)
         {
             return new UserDto
             {
                 UserName = user.UserName,
-                JWT = _jWTService.creatJWT(user)
+                JWT = await _jWTService.CreateJWT(user),
             };
         }
 

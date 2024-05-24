@@ -12,7 +12,7 @@ using ScooterService.Data;
 namespace ScooterService.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240523171839_Init")]
+    [Migration("20240524111912_Init")]
     partial class Init
     {
         /// <inheritdoc />
@@ -230,8 +230,15 @@ namespace ScooterService.Migrations
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
 
+                    b.Property<string>("AccountStatus")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
                     b.Property<string>("ConcurrencyStamp")
                         .HasColumnType("longtext");
+
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("datetime(6)");
 
                     b.Property<string>("Email")
                         .HasColumnType("longtext");

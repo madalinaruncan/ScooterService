@@ -44,7 +44,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         {
             ValidateIssuerSigningKey = true, //validate token based on the key provided in config
             IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JWT:Key"])), //issuer signin key based on JWT:key
-            ValidIssuer = builder.Configuration["JET:Issuer"], //api url
+            ValidIssuer = builder.Configuration["JWT:Issuer"], //api url
             ValidateIssuer = true, //validate the issuer
             ValidateAudience = false // do not validate the audience (Angular app)
         };

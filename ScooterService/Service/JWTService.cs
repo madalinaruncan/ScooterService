@@ -20,7 +20,7 @@ namespace ScooterService.Service
             //key for token encryption & decription
             _jwtKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["JWT:Key"]));
         }
-        public string creatJWT(User user)
+        public async Task<string> CreateJWT(User user)
         {
             var userClaims = new List<Claim>
             {
@@ -30,11 +30,14 @@ namespace ScooterService.Service
                 new Claim(ClaimTypes.Name, user.UserName)
             };
 
+            var roles = await _userManager.GetRolesAsync(user);
+            userClaims.AddRange(roles.Select(role => new Claim(ClaimTypes.Role, role)));
+
             var creadentials = new SigningCredentials(_jwtKey, SecurityAlgorithms.HmacSha512Signature);
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(userClaims),
-                Expires = DateTime.UtcNow.AddMinutes(int.Parse(_config["JWT:ExpiresInDays"])),
+                Expires = DateTime.UtcNow.AddDays(int.Parse(_config["JWT:ExpiresInDays"])),
                 SigningCredentials = creadentials,
                 Issuer = _config["JWT:Issuer"]
             };

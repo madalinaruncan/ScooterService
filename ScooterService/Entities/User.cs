@@ -8,6 +8,8 @@ namespace ScooterService.Entities
     {
 
         public string Name { get; set; }
+        public DateTime DateCreated { get; set; } = DateTime.UtcNow;
+        public string AccountStatus { get; set; } = "Pending";
         public IEnumerable<Reparation> Reparations { get; set; }
 
     }
