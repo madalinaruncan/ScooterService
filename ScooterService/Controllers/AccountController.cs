@@ -79,6 +79,57 @@ namespace ScooterService.Controllers
 
         }
 
+        [HttpPost("forgot-password/{email}")]
+        public async Task<IActionResult> ForgotPassword(string email)
+        {
+            if (string.IsNullOrEmpty(email)) return BadRequest("Invalid email");
+
+            var user = await _userManager.FindByEmailAsync(email);
+
+            if (user == null) return Unauthorized("This email address has not been registerd yet");
+            //if (user.EmailConfirmed == false) return BadRequest("Please confirm your email address first.");
+
+            try
+            {
+                if (await SendForgotPasswordEmail(user))
+                {
+                    return Ok(new JsonResult(new { title = "Forgot password email sent", message = "Please check your email" }));
+                }
+
+                return BadRequest("Failed to send email. Please contact admin");
+            }
+            catch (Exception)
+            {
+                return BadRequest("Failed to send email. Please contact admin");
+            }
+        }
+
+        [HttpPut("reset-password")]
+        public async Task<IActionResult> ResetPassword(ResetPasswordDto model)
+        {
+            var user = await _userManager.FindByEmailAsync(model.Email);
+            if (user == null) return Unauthorized("This email address has not been registerd yet");
+            //if (user.EmailConfirmed == false) return BadRequest("Please confirm your email address first");
+
+            try
+            {
+                var decodedTokenBytes = WebEncoders.Base64UrlDecode(model.Token);
+                var decodedToken = Encoding.UTF8.GetString(decodedTokenBytes);
+
+                var result = await _userManager.ResetPasswordAsync(user, decodedToken, model.NewPassword);
+                if (result.Succeeded)
+                {
+                    return Ok(new JsonResult(new { title = "Password reset success", message = "Your password has been reset" }));
+                }
+
+                return BadRequest("Invalid token. Please try again");
+            }
+            catch (Exception)
+            {
+                return BadRequest("Invalid token. Please try again");
+            }
+        }
+
 
         [HttpPut("confirm-email")]
         public async Task<IActionResult> ConfirmEmail(EmailConfirmationDto model)
@@ -115,6 +166,23 @@ namespace ScooterService.Controllers
                 UserName = user.UserName,
                 JWT = await _jWTService.CreateJWT(user),
             };
+        }
+        private async Task<bool> SendForgotPasswordEmail(User user)
+        {
+            var token = await _userManager.GeneratePasswordResetTokenAsync(user);
+            token = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(token));
+            var url = $"{_config["JWT:ClientUrl"]}/{_config["Email:ResetPasswordPath"]}?token={token}&email={user.Email}";
+
+            var body = $"<p>Hello: {user.Name}</p>" +
+               //$"<p>Username: {user.UserName}.</p>" +
+               "<p>In order to reset your password, please click on the following link.</p>" +
+               $"<p><a href=\"{url}\">Click here</a></p>" +
+               "<p>Thank you,</p>" +
+               $"<br>{_config["Email:ApplicationName"]}";
+
+            var emailSend = new EmailSendDto(user.Email, "Forgot password", body);
+
+            return await _emailService.SendEmailAsync(emailSend);
         }
 
         private async Task<bool> CheckEmailExistsAsync(string email)
