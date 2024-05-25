@@ -32,6 +32,11 @@ builder.Services.AddScoped<IUserService, UserService>();
 
 builder.Services.AddScoped<IScooterRepository, ScooterRepository>();
 builder.Services.AddScoped<IScooterService, ScooterServiceImpl>();
+builder.Services.AddScoped<IIssueRepository, IssueRepository>();
+builder.Services.AddScoped<IIssueService, IssueServiceImpl>();
+
+
+
 
 
 var app = builder.Build();
