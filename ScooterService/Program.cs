@@ -40,9 +40,6 @@ builder.Services.AddScoped<IScooterService, ScooterServiceImpl>();
 builder.Services.AddScoped<IIssueRepository, IssueRepository>();
 builder.Services.AddScoped<IIssueService, IssueServiceImpl>();
 
-
-
-
 builder.Services.AddControllers().AddFluentValidation();
 
 builder.Services.AddTransient<IValidator<ScooterAddDto>, ScooterAddDtoValidator>();
