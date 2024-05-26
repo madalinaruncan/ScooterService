@@ -40,8 +40,11 @@ builder.Services.AddScoped<IIssueService, IssueServiceImpl>();
 
 
 
+<<<<<<< HEAD
 
 builder.Services.AddScoped<IValidator<Reparation>, ReparationValidator>();
+=======
+>>>>>>> 3465547eebafb6a29bcca09ce4f2fe83b5a8ce39
 
 
 var app = builder.Build();
