@@ -1,7 +1,9 @@
+
 using FluentValidation;
+using FluentValidation.AspNetCore;
 using Microsoft.EntityFrameworkCore;
 using ScooterService.Data;
-using ScooterService.Entities;
+using ScooterService.Dtos;
 using ScooterService.Entities.Validators;
 using ScooterService.Repository;
 using ScooterService.Service;
@@ -41,7 +43,12 @@ builder.Services.AddScoped<IIssueService, IssueServiceImpl>();
 
 
 
-builder.Services.AddScoped<IValidator<Reparation>, ReparationValidator>();
+builder.Services.AddControllers().AddFluentValidation();
+
+builder.Services.AddTransient<IValidator<ScooterAddDto>, ScooterAddDtoValidator>();
+builder.Services.AddTransient<IValidator<IssueAddDto>, IssueAddDtoValidator>();
+builder.Services.AddTransient<IValidator<ReparationAddDto>, ReparationAddDtoValidator>();
+builder.Services.AddTransient<IValidator<ReparationUpdateDto>, ReparationUpdateDtoValidator>();
 
 
 var app = builder.Build();

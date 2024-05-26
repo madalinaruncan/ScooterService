@@ -1,5 +1,4 @@
 ﻿using ScooterService.Entities;
-using ScooterService.Entities.Validators;
 using ScooterService.Enums;
 using ScooterService.Repository;
 
@@ -18,12 +17,8 @@ namespace ScooterService.Service
         {
             reparation.Status = ReparationStatus.Pending;
             reparation.UserId = 1;
-            var validator = new ReparationValidator();
-            var validationResult = await validator.ValidateAsync(reparation);
-            if (validationResult.IsValid)
-            {
-                await _reparationRepository.CreateReparationAsync(reparation);
-            }
+            await _reparationRepository.CreateReparationAsync(reparation);
+
         }
 
         public async Task<Reparation> GetReparationAsync(long id)
