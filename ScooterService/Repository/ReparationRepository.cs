@@ -19,6 +19,16 @@ namespace ScooterService.Repository
             await _context.SaveChangesAsync();
         }
 
+        public async Task<Reparation> GetReparationAsync(long id)
+        {
+            return await _context.Reparations
+                .Where(r => r.Id == id)
+                .Include(r => r.Scooter)
+                //.Include(r => r.User)
+                .Include(r => r.Issues)
+                .FirstOrDefaultAsync();
+        }
+
         public async Task<IEnumerable<Reparation>> GetReparationsAsync()
         {
             return await _context.Reparations
@@ -26,6 +36,34 @@ namespace ScooterService.Repository
                 //.Include(r => r.User)
                 .Include(r => r.Issues)
                 .ToListAsync();
+        }
+
+        public async Task<bool> ReparationExistsAsync(long id)
+        {
+            return await _context.Reparations.AnyAsync(r => r.Id == id);
+        }
+
+        public async Task UpdateReparationAsync(Reparation reparation)
+        {
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task DeleteReparationAsync(long id)
+        {
+            var reparation = await _context.Reparations
+                .Where(r => r.Id == id)
+                .Include(r => r.Scooter)
+                .Include(r => r.User)
+                .Include(r => r.Issues)
+                .FirstOrDefaultAsync(r => r.Id == id);
+             
+            if (reparation == null)
+            {
+                throw new KeyNotFoundException("Reparation not found");
+            }
+
+            _context.Reparations.Remove(reparation);
+            await _context.SaveChangesAsync();
         }
     }
 }

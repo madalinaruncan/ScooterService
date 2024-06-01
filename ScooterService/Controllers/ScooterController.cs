@@ -31,5 +31,22 @@ namespace ScooterService.Controllers
 
             return Ok(scooters);
         }
+
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Scooter>> GetOne(long id)
+        {
+            var scooter = await _scooterService.GetScooterAsync(id);
+
+            return Ok(scooter);
+        }
+
+        [HttpPut]
+        public async Task<ActionResult<Scooter>> UpdateScooter(ScooterUpdateDto scooter)
+        {
+            var scooterToUpdate = _mapper.Map<Scooter>(scooter);
+            await _scooterService.UpdateScooterAsync(scooterToUpdate);
+
+            return NoContent();
+        }
     }
 }

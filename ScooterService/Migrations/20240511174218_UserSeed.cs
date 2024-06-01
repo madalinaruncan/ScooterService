@@ -14,6 +14,8 @@ namespace ScooterService.Migrations
                 table: "Users",
                 columns: new[] { "Id", "Email", "Name", "PasswordHash", "Role", "Username" },
                 values: new object[] { 1L, "allan.service@gmail.com", "Allan", "ascrvdvs", 1, "Allan" });
+
+         
         }
 
         /// <inheritdoc />
