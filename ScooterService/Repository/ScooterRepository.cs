@@ -19,5 +19,20 @@ namespace ScooterService.Repository {
         {
             return await _context.Scooters.ToListAsync();
         }
+               public async Task UpdateScooterAsync(Scooter scooter)
+        {
+            await _context.SaveChangesAsync();
+        }
+        public async Task<bool> ScooterExistsAsync(long id)
+        {
+            return await _context.Scooters.AnyAsync(r => r.Id == id);
+        }
+
+        public async Task<Scooter> GetScooterAsync(long id)
+        {
+           return await _context.Scooters
+            .Where(r => r.Id == id)
+            .FirstOrDefaultAsync();
+        }
     }
 }
