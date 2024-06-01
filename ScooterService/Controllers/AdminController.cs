@@ -8,7 +8,7 @@ using ScooterService.Entities;
 
 namespace ScooterService.Controllers
 {
-    [Authorize(Roles = "Admin")]
+    //[Authorize(Roles = "Admin")]
     [Route("api/[controller]")]
     [ApiController]
     public class AdminController : ControllerBase
@@ -38,6 +38,7 @@ namespace ScooterService.Controllers
                     UserName = user.UserName,
                     Name = user.Name,
                     DateCreated = user.DateCreated,
+                    AccountStatus = user.AccountStatus,
                     Roles = await _userManager.GetRolesAsync(user)
                 };
 
@@ -73,9 +74,9 @@ namespace ScooterService.Controllers
             var result = await _userManager.UpdateAsync(user);
 
             if (result.Succeeded)
-                return Ok("Account confirmed successfully"); 
+                return Ok(new JsonResult(new { message = "Account confirmed successfully" }));
             else
-                return BadRequest("Failed to confirm account"); 
+                return BadRequest(new JsonResult(new { message = "Failed to confirm account" }));
         }
 
         [HttpPost("reject-account/{id}")]
@@ -90,9 +91,9 @@ namespace ScooterService.Controllers
 
 
             if (result.Succeeded)
-                return Ok("Account rejected successfully");
+                return Ok(new JsonResult(new { message = "Account rejected successfully" }));
             else
-                return BadRequest("Failed to reject account");
+                return BadRequest(new JsonResult(new {message = "Failed to reject account" }));
         }
 
         private bool IsAdminUserId(string userId)
