@@ -2,8 +2,8 @@
 {
     public class IssueUpdateDto
     {
-        public string name { get; set; }
-
+        public long Id { get; set; }
+        public string Name { get; set; }
         public int HoursOfWork { get; set; }   
 
     }

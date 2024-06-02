@@ -79,6 +79,7 @@ builder.Services.AddControllers().AddFluentValidation();
 
 builder.Services.AddTransient<IValidator<ScooterAddDto>, ScooterAddDtoValidator>();
 builder.Services.AddTransient<IValidator<IssueAddDto>, IssueAddDtoValidator>();
+builder.Services.AddTransient<IValidator<IssueUpdateDto>, IssueUpdateDtoValidator>();
 builder.Services.AddTransient<IValidator<ReparationAddDto>, ReparationAddDtoValidator>();
 builder.Services.AddTransient<IValidator<ReparationUpdateDto>, ReparationUpdateDtoValidator>();
 
