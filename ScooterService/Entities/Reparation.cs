@@ -8,7 +8,7 @@ namespace ScooterService.Entities
         public ReparationStatus Status { get; set; }
         public long ScooterId { get; set; }
         public Scooter Scooter { get; set; }
-        public long UserId { get; set; }
+        //public long UserId { get; set; }
         public User User { get; set; }
         public IEnumerable<Issue> Issues { get; set; }
     }

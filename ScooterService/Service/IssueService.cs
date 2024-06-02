@@ -1,5 +1,4 @@
 ﻿using ScooterService.Entities;
-using ScooterService.Entities.Validators;
 using ScooterService.Repository;
 using ScooterService.Enums;
 
@@ -11,9 +10,6 @@ namespace ScooterService.Service
 
     {
         private readonly IIssueRepository _issueRepository;
-
-        
-
         public IssueServiceImpl(IIssueRepository issueRepository)
         {
             _issueRepository = issueRepository;

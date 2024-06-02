@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using ScooterService.Dtos;
+using ScooterService.Dtos.Account;
 using ScooterService.Entities;
 
 namespace ScooterService.AutoMapper_Profiles
@@ -8,8 +8,8 @@ namespace ScooterService.AutoMapper_Profiles
     {
         public UserProfile()
         {
-            CreateMap<UserRegisterDto, User>();
-            CreateMap<UserLoginDto, User>();
+            CreateMap<RegisterDto, User>();
+            CreateMap<LoginDto, User>();
         }
     }
 }
