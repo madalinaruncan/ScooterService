@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace ScooterService.Migrations
 {
     /// <inheritdoc />
-    public partial class Init : Migration
+    public partial class InitMigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -171,9 +171,9 @@ namespace ScooterService.Migrations
                 name: "UserTokens",
                 columns: table => new
                 {
-                    UserId = table.Column<string>(type: "varchar(255)", nullable: false)
+                    UserId = table.Column<string>(type: "longtext", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    LoginProvider = table.Column<string>(type: "varchar(255)", nullable: false)
+                    LoginProvider = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     Name = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
@@ -182,7 +182,6 @@ namespace ScooterService.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_UserTokens", x => new { x.UserId, x.LoginProvider });
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 

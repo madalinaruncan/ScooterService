@@ -119,20 +119,19 @@ namespace ScooterService.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
-                    b.Property<string>("UserId")
-                        .HasColumnType("varchar(255)");
-
                     b.Property<string>("LoginProvider")
-                        .HasColumnType("varchar(255)");
+                        .IsRequired()
+                        .HasColumnType("longtext");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<string>("Value")
+                    b.Property<string>("UserId")
                         .HasColumnType("longtext");
 
-                    b.HasKey("UserId", "LoginProvider");
+                    b.Property<string>("Value")
+                        .HasColumnType("longtext");
 
                     b.ToTable("UserTokens");
                 });
