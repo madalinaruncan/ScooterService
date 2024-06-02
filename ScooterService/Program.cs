@@ -1,9 +1,13 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using FluentValidation;
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-using ScooterService.Data;
 using ScooterService.Entities;
+using ScooterService.Data;
+using ScooterService.Dtos;
+using ScooterService.Entities.Validators;
 using ScooterService.Repository;
 using ScooterService.Service;
 using System.Text;
@@ -65,6 +69,18 @@ builder.Services.AddScoped<IReparationService, ReparationService>();
 
 builder.Services.AddScoped<IScooterRepository, ScooterRepository>();
 builder.Services.AddScoped<IScooterService, ScooterServiceImpl>();
+builder.Services.AddScoped<IIssueRepository, IssueRepository>();
+builder.Services.AddScoped<IIssueService, IssueServiceImpl>();
+
+
+
+
+builder.Services.AddControllers().AddFluentValidation();
+
+builder.Services.AddTransient<IValidator<ScooterAddDto>, ScooterAddDtoValidator>();
+builder.Services.AddTransient<IValidator<IssueAddDto>, IssueAddDtoValidator>();
+builder.Services.AddTransient<IValidator<ReparationAddDto>, ReparationAddDtoValidator>();
+builder.Services.AddTransient<IValidator<ReparationUpdateDto>, ReparationUpdateDtoValidator>();
 
 
 var app = builder.Build();
