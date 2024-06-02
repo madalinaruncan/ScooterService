@@ -40,15 +40,16 @@ builder.Services.AddScoped<IScooterService, ScooterServiceImpl>();
 builder.Services.AddScoped<IIssueRepository, IssueRepository>();
 builder.Services.AddScoped<IIssueService, IssueServiceImpl>();
 
-
-
-
 builder.Services.AddControllers().AddFluentValidation();
 
+<<<<<<< HEAD
 builder.Services.AddTransient<IValidator<ScooterAddDto>, ScooterAddDtoValidator>();
 builder.Services.AddTransient<IValidator<IssueAddDto>, IssueAddDtoValidator>();
 builder.Services.AddTransient<IValidator<ReparationAddDto>, ReparationAddDtoValidator>();
 builder.Services.AddTransient<IValidator<ReparationUpdateDto>, ReparationUpdateDtoValidator>();
+=======
+
+builder.Services.AddScoped<IValidator<Reparation>, ReparationValidator>();
 
 
 var app = builder.Build();
