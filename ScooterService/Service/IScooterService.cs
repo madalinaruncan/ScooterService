@@ -6,6 +6,5 @@ namespace ScooterService.Service {
         Task<IEnumerable<Scooter>> GetScootersAsync();
         Task<Scooter> GetScooterAsync(long id);
         Task UpdateScooterAsync(Scooter scooter);
-        Task DeleteScooterAsync(long id);
     }
 }

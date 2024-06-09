@@ -35,11 +35,6 @@ namespace ScooterService.Service {
             await _scooterRepository.UpdateScooterAsync(scooter);
         }
 
-        public async Task DeleteScooterAsync(long id)
-        {
-            await _scooterRepository.DeleteScooterAsync(id);
-        }
-
         public async Task<Scooter> GetScooterAsync(long id)
         {
             return await _scooterRepository.GetScooterAsync(id);

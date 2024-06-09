@@ -48,21 +48,5 @@ namespace ScooterService.Controllers
 
             return NoContent();
         }
-
-
-        [HttpDelete("{id}")]
-        public async Task<ActionResult<Scooter>> DeleteScooter(long id)
-        {
-            try
-            {
-                await _scooterService.DeleteScooterAsync(id);
-            }
-            catch (KeyNotFoundException)
-            {
-                return NotFound();
-            }
-
-            return NoContent();
-        }
     }
 }

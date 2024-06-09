@@ -6,7 +6,6 @@ namespace ScooterService.Repository {
         Task<IEnumerable<Scooter>> GetScootersAsync();
         Task<Scooter> GetScooterAsync(long id);
         Task UpdateScooterAsync(Scooter scooter);
-        Task DeleteScooterAsync(long id);
         Task<bool> ScooterExistsAsync(long id);
     }
 }
