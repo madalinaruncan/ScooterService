@@ -33,7 +33,7 @@ namespace ScooterService.Repository
         {
             return await _context.Reparations
                 .Include(r => r.Scooter)
-                //.Include(r => r.User)
+                .Include(r => r.User)
                 .Include(r => r.Issues)
                 .ToListAsync();
         }

@@ -32,12 +32,25 @@ namespace ScooterService.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Reparation>>> GetAll()
+        public async Task<ActionResult<IEnumerable<ReparationGetDto>>> GetAll()
         {
             var reparations = await _reparationService.GetReparationsAsync();
+            var reparationDtos = reparations.Select(reparation => new ReparationGetDto
+            {
+                Id = reparation.Id,
+                Status = reparation.Status,
+                Scooter = reparation.Scooter,
+                User = new UserGetDto
+                {
+                    Name = reparation.User.Name
+                },
+                
+                Issues = reparation.Issues
+            });
 
-            return Ok(reparations);
+            return Ok(reparationDtos);
         }
+
 
         [HttpGet("{id}")]
         public async Task<ActionResult<Reparation>> GetOne(long id)
