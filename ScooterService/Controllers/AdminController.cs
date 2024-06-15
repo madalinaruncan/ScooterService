@@ -8,7 +8,7 @@ using ScooterService.Entities;
 
 namespace ScooterService.Controllers
 {
-    //[Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Admin")]
     [Route("api/[controller]")]
     [ApiController]
     public class AdminController : ControllerBase

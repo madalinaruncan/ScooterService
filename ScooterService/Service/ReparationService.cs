@@ -16,7 +16,7 @@ namespace ScooterService.Service
         public async Task CreateReparationAsync(Reparation reparation)
         {
             reparation.Status = ReparationStatus.Pending;
-            reparation.User.Id = "1";
+            //reparation.User.Id = "1";
             await _reparationRepository.CreateReparationAsync(reparation);
 
         }

@@ -1,9 +1,12 @@
 ﻿using AutoMapper;
 using FluentValidation;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Primitives;
 using ScooterService.Dtos;
 using ScooterService.Entities;
 using ScooterService.Service;
+using System.IdentityModel.Tokens.Jwt;
 
 namespace ScooterService.Controllers
 {
@@ -15,13 +18,17 @@ namespace ScooterService.Controllers
         private readonly IReparationService _reparationService;
         private readonly IValidator<ReparationAddDto> _addValidator;
         private readonly IValidator<ReparationUpdateDto> _updateValidator;
+        private readonly UserManager<User> _userManager;
 
-        public ReparationController(IMapper mapper, IReparationService reparationService, IValidator<ReparationAddDto> addValidator, IValidator<ReparationUpdateDto> updateValidator)
+
+        public ReparationController(IMapper mapper, IReparationService reparationService, IValidator<ReparationAddDto> addValidator, IValidator<ReparationUpdateDto> updateValidator, UserManager<User> userManager)
         {
             _mapper = mapper;
             _reparationService = reparationService;
             _addValidator = addValidator;
             _updateValidator = updateValidator;
+            _userManager = userManager;
+
         }
 
         [HttpGet]
@@ -50,7 +57,24 @@ namespace ScooterService.Controllers
                 return BadRequest(validationResult.Errors);
             }
             var reparationToAdd = _mapper.Map<Reparation>(reparation);
-        
+            if (Request.Headers.TryGetValue("Authorization", out StringValues authHeader))
+            {
+                var token = authHeader.FirstOrDefault()?.Split(" ").Last();
+                if (token != null)
+                {
+                    var jwtHandler = new JwtSecurityTokenHandler();
+                    var jwtToken = jwtHandler.ReadJwtToken(token);
+
+                    var userId = jwtToken.Claims.First(claim => claim.Type == "nameid").Value;
+                    if (userId != null)
+                    {
+                        var user = await _userManager.FindByIdAsync(userId);
+                        reparationToAdd.User = user;
+                    }
+                }
+            }
+
+
             await _reparationService.CreateReparationAsync(reparationToAdd);
 
             return NoContent();
