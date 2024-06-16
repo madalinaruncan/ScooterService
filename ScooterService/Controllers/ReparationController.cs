@@ -60,7 +60,7 @@ namespace ScooterService.Controllers
             return Ok(reparation);
         }
 
-        [HttpPost]
+        [HttpPost("add-reparation")]
         public async Task<ActionResult> CreateReparation([FromBody] ReparationAddDto reparation)
         {
             var validationResult = await _addValidator.ValidateAsync(reparation);
